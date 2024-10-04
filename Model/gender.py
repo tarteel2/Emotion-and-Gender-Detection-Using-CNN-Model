@@ -140,33 +140,33 @@ plt.gca().xaxis.tick_top()
 
 plt.show()
 
-# #ROC Curve
-# new_label = ['Male', 'Female']
-# final_label = new_label
-# new_class = 2
+#ROC Curve
+new_label = ['Male', 'Female']
+final_label = new_label
+new_class = 2
 
-# #Ravel flatten array into one vector
-# y_pred_ravel = Y_pred.ravel()
-# lw = 2
+#Ravel flatten array into one vector
+y_pred_ravel = Y_pred.ravel()
+lw = 2
 
-# fpr = dict()
-# tpr = dict()
-# roc_auc = dict()
+fpr = dict()
+tpr = dict()
+roc_auc = dict()
 
-# for i in range(new_class):
-#     fpr[i], tpr[i], _ = roc_curve(Y_test[:, i], Y_pred[:, i])
-#     roc_auc[i] = auc(fpr[i], tpr[i])
+for i in range(new_class):
+    fpr[i], tpr[i], _ = roc_curve(Y_test[:, i], Y_pred[:, i])
+    roc_auc[i] = auc(fpr[i], tpr[i])
     
-# colors = cycle(['red', 'black'])
-# for i, color in zip(range(new_class), colors):
-#     plt.plot(fpr[i], tpr[i], color = color, lw = lw,
-#              label = 'ROC curve of class {0}'''.format(final_label[i]))
+colors = cycle(['red', 'black'])
+for i, color in zip(range(new_class), colors):
+    plt.plot(fpr[i], tpr[i], color = color, lw = lw,
+             label = 'ROC curve of class {0}'''.format(final_label[i]))
     
-# plt.plot([0, 1], [0, 1], 'k--', lw = lw)
-# plt.xlim([0, 1.0])
-# plt.ylim([0.0, 1.05])
-# plt.xlabel('False Positive Rate')
-# plt.ylabel('True Positive Rate')
-# plt.title('Receiver Operating Characteristic')
-# plt.legend(loc = "lower right")
-# plt.show()
+plt.plot([0, 1], [0, 1], 'k--', lw = lw)
+plt.xlim([0, 1.0])
+plt.ylim([0.0, 1.05])
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.title('Receiver Operating Characteristic')
+plt.legend(loc = "lower right")
+plt.show()
