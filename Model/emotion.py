@@ -30,8 +30,13 @@ labels = []
 for sub_folder in sub_folders:
   if sub_folder == 'Happy':
       label = 0
-  else:
+  if sub_folder == 'Sad':
       label = 1
+  if sub_folder == 'Male':
+      label = 2
+  if sub_folder == 'Female':
+      label = 3
+  
   path = os.path.join(dataset_folder, sub_folder)
   
   #Read images in sub folder, one by one
@@ -48,7 +53,7 @@ images_x = np.array(images)
 labels_y = np.array(labels)
 
 #Encoding labels
-labels_y_encoded = tf.keras.utils.to_categorical(labels_y, num_classes = 2)
+labels_y_encoded = tf.keras.utils.to_categorical(labels_y, num_classes = 4)
 
 #Split into 75 train and 25 test
 X_train, X_test, Y_train, Y_test = train_test_split(images_x, labels_y_encoded, test_size = 0.25, random_state = 10)
@@ -78,8 +83,8 @@ pool4 = MaxPooling2D(pool_size = (2, 2))(conv4)
 flatten = Flatten()(pool4)
 dense_1 = Dense(128, activation = 'relu')(flatten)
 drop_1 = Dropout(0.2)(dense_1)
-#Change to softmax for 2 classes
-output = Dense(2, activation = 'softmax')(drop_1) 
+#Change to softmax for 4 classes
+output = Dense(4, activation = 'softmax')(drop_1) 
 
 #Compile Model
 model = Model(inputs = input_layer, outputs = output)
@@ -119,54 +124,54 @@ ax[1].tick_params(axis = 'both', labelsize = 12)
 fig.suptitle(x = 0.5, y = 0.92, t = "Lineplots Showing Loss and Accuracy of CNN Model by Epochs", fontsize = 16)
 plt.show()
 
-#Plotting confusion matix and roc curve of model
-dir = "Model/Output/Emotion_Model.keras"
-model = load_model(dir)
-best_model = model
+# #Plotting confusion matix and roc curve of model
+# dir = "Model/Output/Emotion_Model.keras"
+# model = load_model(dir)
+# best_model = model
 
-Y_pred = best_model.predict(X_test)
-Y_test_labels = np.argmax(Y_test, axis = 1)
-Y_pred_labels = np.argmax(Y_pred, axis = 1)
+# Y_pred = best_model.predict(X_test)
+# Y_test_labels = np.argmax(Y_test, axis = 1)
+# Y_pred_labels = np.argmax(Y_pred, axis = 1)
 
-cm = confusion_matrix(np.argmax(Y_test, axis = 1), np.argmax(Y_pred, axis = 1))
-disp = ConfusionMatrixDisplay(confusion_matrix = cm, display_labels = ["Happy", "Sad"])
-disp.plot()
-plt.title('My CNN Emotion Classifer')
-plt.ylabel('Actual class')
-plt.xlabel('Predicted class')
+# cm = confusion_matrix(np.argmax(Y_test, axis = 1), np.argmax(Y_pred, axis = 1))
+# disp = ConfusionMatrixDisplay(confusion_matrix = cm, display_labels = ["Happy", "Sad", "Male", "Female"])
+# disp.plot()
+# plt.title('My CNN Emotion Classifer')
+# plt.ylabel('Actual class')
+# plt.xlabel('Predicted class')
 
-plt.gca().xaxis.set_label_position('top')
-plt.gca().xaxis.tick_top()
+# plt.gca().xaxis.set_label_position('top')
+# plt.gca().xaxis.tick_top()
 
-plt.show()
+# plt.show()
 
-#ROC Curve
-new_label = ['Happy', 'Sad']
-final_label = new_label
-new_class = 2
+# #ROC Curve
+# new_label = ['Happy', 'Sad', 'Male', 'Female']
+# final_label = new_label
+# new_class = 4
 
-#Ravel flatten array into one vector
-y_pred_ravel = Y_pred.ravel()
-lw = 2
+# #Ravel flatten array into one vector
+# y_pred_ravel = Y_pred.ravel()
+# lw = 2
 
-fpr = dict()
-tpr = dict()
-roc_auc = dict()
+# fpr = dict()
+# tpr = dict()
+# roc_auc = dict()
 
-for i in range(new_class):
-    fpr[i], tpr[i], _ = roc_curve(Y_test[:, i], Y_pred[:, i])
-    roc_auc[i] = auc(fpr[i], tpr[i])
+# for i in range(new_class):
+#     fpr[i], tpr[i], _ = roc_curve(Y_test[:, i], Y_pred[:, i])
+#     roc_auc[i] = auc(fpr[i], tpr[i])
     
-colors = cycle(['red', 'black'])
-for i, color in zip(range(new_class), colors):
-    plt.plot(fpr[i], tpr[i], color = color, lw = lw,
-             label = 'ROC curve of class {0}'''.format(final_label[i]))
+# colors = cycle(['red', 'black', 'yellow', 'purple'])
+# for i, color in zip(range(new_class), colors):
+#     plt.plot(fpr[i], tpr[i], color = color, lw = lw,
+#              label = 'ROC curve of class {0}'''.format(final_label[i]))
     
-plt.plot([0, 1], [0, 1], 'k--', lw = lw)
-plt.xlim([0, 1.0])
-plt.ylim([0.0, 1.05])
-plt.xlabel('False Positive Rate')
-plt.ylabel('True Positive Rate')
-plt.title('Receiver Operating Characteristic')
-plt.legend(loc = "lower right")
-plt.show()
+# plt.plot([0, 1], [0, 1], 'k--', lw = lw)
+# plt.xlim([0, 1.0])
+# plt.ylim([0.0, 1.05])
+# plt.xlabel('False Positive Rate')
+# plt.ylabel('True Positive Rate')
+# plt.title('Receiver Operating Characteristic')
+# plt.legend(loc = "lower right")
+# plt.show()
