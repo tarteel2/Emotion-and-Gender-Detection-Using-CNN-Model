@@ -55,8 +55,8 @@ labels_y = np.array(labels)
 #Encoding labels
 labels_y_encoded = tf.keras.utils.to_categorical(labels_y, num_classes = 4)
 
-#Split into 75 train and 25 test
-X_train, X_test, Y_train, Y_test = train_test_split(images_x, labels_y_encoded, test_size = 0.25, random_state = 10)
+#Split into 70 train and 30 test
+X_train, X_test, Y_train, Y_test = train_test_split(images_x, labels_y_encoded, test_size = 0.30, random_state = 10)
 
 #CNN Model Architecture
 input_layer = Input(shape = (224, 224, 1))
@@ -93,8 +93,8 @@ model.compile(optimizer = "adam", loss = "categorical_crossentropy", metrics = [
 
 #Configure Checkpoint Model
 fle_s = 'Model/Output/Emotion_Gender_Model.keras'
-checkpointer = ModelCheckpoint(fle_s, monitor = 'loss',verbose = 1,save_best_only = True,
-                               save_weights_only = False, mode = 'auto',save_freq = 'epoch')
+checkpointer = ModelCheckpoint(fle_s, monitor = 'loss', verbose = 1, save_best_only = True,
+                               save_weights_only = False, mode = 'auto', save_freq = 'epoch')
 callback_list = [checkpointer]
 
 save = model.fit(X_train, Y_train, batch_size = 32, validation_data = (X_test, Y_test), epochs = 30, callbacks = [callback_list])
