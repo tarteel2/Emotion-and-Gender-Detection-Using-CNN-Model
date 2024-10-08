@@ -4,8 +4,9 @@ import numpy as np
 from tensorflow import keras
 from keras.models import load_model
 
-emotion_model = load_model("Model/Output/Emotion_Model.keras")
-gender_model = load_model("Model/Output/Gender_Model.keras")
+model = load_model("Model/Output/Emotion_Gender_Model.keras")
+#emotion_model = load_model("Model/Output/Emotion_Model.keras")
+#gender_model = load_model("Model/Output/Gender_Model.keras")
 
 emotion_classes = {0:'Happy', 1:'Sad'}
 gender_classes = {0:'Male', 1:'Female'}
@@ -41,8 +42,8 @@ while True:
         
         #Perform emotion and gender analysis on face ROI
         #Determine emotion and gender
-        predicted_emotion = emotion_model.predict(img)
-        predicted_gender = gender_model.predict(img2)
+        predicted_emotion = model.predict(img)
+        predicted_gender = model.predict(img2)
         
         index = int(np.argmax(predicted_emotion))
         index2 = int(np.argmax(predicted_gender))

@@ -7,8 +7,9 @@ from IPython.display import Image
 from keras.models import load_model
 from keras.preprocessing import image
 
-emotion_model = load_model("Model/Output/Emotion_Model.keras")
-gender_model = load_model("Model/Output/Gender_Model.keras")
+model = load_model("Model/Output/Emotion_Gender_Model.keras")
+#emotion_model = load_model("Model/Output/Emotion_Model.keras")
+#gender_model = load_model("Model/Output/Gender_Model.keras")
 
 #Creating two class dictionary
 emotion_classes = {0:'Happy', 1:'Sad'}
@@ -17,7 +18,6 @@ gender_classes = {0:'Male', 1:'Female'}
 #Read downloaded test image in Opencv
 test_img = cv2.imread('Model/Photos/1happy.png')
 test_img = cv2.imread('Model/Photos/1sad.png')
-
 
 #Convert image to gray scale OpenCV
 gray_img = cv2.cvtColor(test_img, cv2.COLOR_BGR2GRAY)
@@ -41,7 +41,7 @@ for (x, y, w, h) in faces_coordinates:
     final_image1 = cv2.resize(cropped_face, (224, 224), interpolation = cv2.INTER_AREA)
     final_image_array = np.array(final_image1)
     input_test = np.expand_dims(final_image_array, axis = 0) ## Need 4th dimension
-    output_test = emotion_classes[np.argmax(emotion_model.predict(input_test))]
+    output_test = emotion_classes[np.argmax(model.predict(input_test))]
     output_str = str(i) + ": " + output_test
     print(output_str)
     
@@ -56,7 +56,7 @@ for (x, y, w, h) in faces_coordinates:
     final_image2 = cv2.resize(cropped_face2, (224, 224), interpolation = cv2.INTER_AREA)
     final_image_array2 = np.array(final_image2)
     input_test2 = np.expand_dims(final_image_array2, axis = 0) ## Need 4th dimension
-    output_test2 = gender_classes[np.argmax(gender_model.predict(input_test2))]
+    output_test2 = gender_classes[np.argmax(model.predict(input_test2))]
     output_str2 = str(i) + ": " + output_test2
     print(output_str2)
     
