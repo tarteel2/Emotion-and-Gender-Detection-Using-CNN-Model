@@ -97,7 +97,7 @@ checkpointer = ModelCheckpoint(fle_s, monitor = 'loss',verbose = 1,save_best_onl
                                save_weights_only = False, mode = 'auto',save_freq = 'epoch')
 callback_list = [checkpointer]
 
-save = model.fit(X_train, Y_train, batch_size = 32, validation_data = (X_test, Y_test), epochs = 100, callbacks = [callback_list])
+save = model.fit(X_train, Y_train, batch_size = 32, validation_data = (X_test, Y_test), epochs = 30, callbacks = [callback_list])
 
 #Checking train and test loss and accuracy values from above neural network
 train_loss = save.history['loss']
