@@ -25,17 +25,12 @@ sub_folders = os.listdir(dataset_folder)
 #Declare folder names as labels and images within
 images = []
 labels = []
+tmp = sub_folders
 
 #Read and set index 0:Happy and 1:Sad folders in dataset folder
 for sub_folder in sub_folders:
-  if sub_folder == 'Happy':
-      label = 0
-  if sub_folder == 'Sad':
-      label = 1
-  if sub_folder == 'Male':
-      label = 2
-  if sub_folder == 'Female':
-      label = 3
+  sub_folder_idx = tmp.index(sub_folder)
+  label = sub_folder_idx
   
   path = os.path.join(dataset_folder, sub_folder)
   

@@ -8,8 +8,6 @@ from keras.models import load_model
 from keras.preprocessing import image
 
 model = load_model("Model/Output/Emotion_Gender_Model.keras")
-#emotion_model = load_model("Model/Output/Emotion_Model.keras")
-#gender_model = load_model("Model/Output/Gender_Model.keras")
 
 #Creating two class dictionary
 emotion_classes = {0:'Happy', 1:'Sad'}
