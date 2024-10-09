@@ -100,7 +100,7 @@ train_accuracy = save.history['accuracy']
 test_accuracy = save.history['val_accuracy']
 
 #Plotting line chart to visualize loss and accuracy values by epochs
-fig, ax = plt.subplots(ncols = 2, figsize = (15,7))
+fig, ax = plt.subplots(ncols = 2, figsize = (15, 7))
 ax = ax.ravel()
 ax[0].plot(train_loss, label = 'Train Loss', color = 'royalblue', marker = 'o', markersize = 5)
 ax[0].plot(test_loss, label = 'Test Loss', color = 'orangered', marker = 'o', markersize = 5)
@@ -128,7 +128,7 @@ plt.show()
 # Y_pred_labels = np.argmax(Y_pred, axis = 1)
 
 # cm = confusion_matrix(np.argmax(Y_test, axis = 1), np.argmax(Y_pred, axis = 1))
-# disp = ConfusionMatrixDisplay(confusion_matrix = cm, display_labels = ["Happy", "Sad", "Male", "Female"])
+# disp = ConfusionMatrixDisplay(confusion_matrix = cm, display_labels = ["Happy_Female", "Sad_Male", "Happy_Male", "Sad_Female",])
 # disp.plot()
 # plt.title('My CNN Emotion Classifer')
 # plt.ylabel('Actual class')
@@ -140,7 +140,7 @@ plt.show()
 # plt.show()
 
 # #ROC Curve
-# new_label = ['Happy', 'Sad', 'Male', 'Female']
+# new_label = ['Happy_Female', 'Sad_Male', 'Happy_Male', 'Sad_Female']
 # final_label = new_label
 # new_class = 4
 
