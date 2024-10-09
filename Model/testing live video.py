@@ -5,8 +5,6 @@ from tensorflow import keras
 from keras.models import load_model
 
 model = load_model("Model/Output/Emotion_Gender_Model.keras")
-#emotion_model = load_model("Model/Output/Emotion_Model.keras")
-#gender_model = load_model("Model/Output/Gender_Model.keras")
 
 emotion_classes = {0:'Happy', 1:'Sad'}
 gender_classes = {0:'Male', 1:'Female'}
