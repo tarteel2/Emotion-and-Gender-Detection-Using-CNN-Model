@@ -56,7 +56,7 @@ labels_y = np.array(labels)
 labels_y_encoded = tf.keras.utils.to_categorical(labels_y, num_classes = 4)
 
 #Split into 75 train and 25 test
-X_train, X_test, Y_train, Y_test = train_test_split(images_x, labels_y_encoded, test_size = 0.25, random_state = 10)
+X_train, X_test, Y_train, Y_test = train_test_split(images_x, labels_y_encoded, test_size = 0.30, random_state = 10)
 
 #CNN Model Architecture
 input_layer = Input(shape = (224, 224, 1))
