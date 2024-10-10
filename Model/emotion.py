@@ -40,7 +40,7 @@ for sub_folder in sub_folders:
   #Read images in sub folder, one by one
   for image in sub_folder_images:
     image_path = path+'/'+image
-    print(image_path+"\t"+str(label))
+    #print(image_path+"\t"+str(label))
     image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
     image = cv2.resize(image, (224, 224))
     images.append(image)
@@ -92,36 +92,36 @@ model.compile(optimizer = "adam", loss = "categorical_crossentropy", metrics = [
 #model.summary()
 
 #Configure Checkpoint Model
-# fle_s = 'Model/Output/Emotion_Gender_Model.keras'
-# checkpointer = ModelCheckpoint(fle_s, monitor = 'loss', verbose = 1, save_best_only = True, save_weights_only = False, mode = 'auto', save_freq = 'epoch')
-# callback_list = [checkpointer]
+fle_s = 'Model/Output/Emotion_Gender_Model.keras'
+checkpointer = ModelCheckpoint(fle_s, monitor = 'loss', verbose = 1, save_best_only = True, save_weights_only = False, mode = 'auto', save_freq = 'epoch')
+callback_list = [checkpointer]
 
-# save = model.fit(X_train, Y_train, batch_size = 32, validation_data = (X_test, Y_test), epochs = 100, callbacks = [callback_list])
+save = model.fit(X_train, Y_train, batch_size = 32, validation_data = (X_test, Y_test), epochs = 100, callbacks = [callback_list])
 
-# #Checking train and test loss and accuracy values from above neural network
-# train_loss = save.history['loss']
-# test_loss = save.history['val_loss']
-# train_accuracy = save.history['accuracy']
-# test_accuracy = save.history['val_accuracy']
+#Checking train and test loss and accuracy values from above neural network
+train_loss = save.history['loss']
+test_loss = save.history['val_loss']
+train_accuracy = save.history['accuracy']
+test_accuracy = save.history['val_accuracy']
 
-# #Plotting line chart to visualize loss and accuracy values by epochs
-# fig, ax = plt.subplots(ncols = 2, figsize = (15, 7))
-# ax = ax.ravel()
-# ax[0].plot(train_loss, label = 'Train Loss', color = 'royalblue', marker = 'o', markersize = 5)
-# ax[0].plot(test_loss, label = 'Test Loss', color = 'orangered', marker = 'o', markersize = 5)
-# ax[0].set_xlabel('Epochs', fontsize = 14)
-# ax[0].set_ylabel('Categorical Crossentropy', fontsize = 14)
-# ax[0].legend(fontsize = 14)
-# ax[0].tick_params(axis = 'both', labelsize = 12)
+#Plotting line chart to visualize loss and accuracy values by epochs
+fig, ax = plt.subplots(ncols = 2, figsize = (15, 7))
+ax = ax.ravel()
+ax[0].plot(train_loss, label = 'Train Loss', color = 'royalblue', marker = 'o', markersize = 5)
+ax[0].plot(test_loss, label = 'Test Loss', color = 'orangered', marker = 'o', markersize = 5)
+ax[0].set_xlabel('Epochs', fontsize = 14)
+ax[0].set_ylabel('Categorical Crossentropy', fontsize = 14)
+ax[0].legend(fontsize = 14)
+ax[0].tick_params(axis = 'both', labelsize = 12)
 
-# ax[1].plot(train_accuracy, label = 'Train Accuracy', color = 'royalblue', marker = 'o', markersize = 5)
-# ax[1].plot(test_accuracy, label = 'Test Accuracy', color = 'orangered', marker = 'o', markersize = 5)
-# ax[1].set_xlabel('Epochs', fontsize = 14)
-# ax[1].set_ylabel('Accuracy', fontsize = 14)
-# ax[1].legend(fontsize = 14)
-# ax[1].tick_params(axis = 'both', labelsize = 12)
-# fig.suptitle(x = 0.5, y = 0.92, t = "Lineplots Showing Loss and Accuracy of CNN Model by Epochs", fontsize = 16)
-# plt.show()
+ax[1].plot(train_accuracy, label = 'Train Accuracy', color = 'royalblue', marker = 'o', markersize = 5)
+ax[1].plot(test_accuracy, label = 'Test Accuracy', color = 'orangered', marker = 'o', markersize = 5)
+ax[1].set_xlabel('Epochs', fontsize = 14)
+ax[1].set_ylabel('Accuracy', fontsize = 14)
+ax[1].legend(fontsize = 14)
+ax[1].tick_params(axis = 'both', labelsize = 12)
+fig.suptitle(x = 0.5, y = 0.92, t = "Lineplots Showing Loss and Accuracy of CNN Model by Epochs", fontsize = 16)
+plt.show()
 
 # #Plotting confusion matix and roc curve of model
 # dir = "Model/Output/Emotion_Model.keras"
