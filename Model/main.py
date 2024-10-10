@@ -53,10 +53,10 @@ images_x = np.array(images)
 labels_y = np.array(labels)
 
 #Encoding labels
-labels_y_encoded = tf.keras.utils.to_categorical(labels_y, num_classes = 2)
+labels_y_encoded = tf.keras.utils.to_categorical(labels_y, num_classes = 4)
 
 #Split into 75 train and 25 test
-X_train, X_test, Y_train, Y_test = train_test_split(images_x, labels_y_encoded, test_size = 0.25, random_state = 10)
+X_train, X_test, Y_train, Y_test = train_test_split(images_x, labels_y_encoded, test_size = 0.30, random_state = 10)
 
 #CNN Model Architecture
 input_layer = Input(shape = (224, 224, 1))
@@ -83,8 +83,8 @@ pool4 = MaxPooling2D(pool_size = (2, 2))(conv4)
 flatten = Flatten()(pool4)
 dense_1 = Dense(128, activation = 'relu')(flatten)
 drop_1 = Dropout(0.2)(dense_1)
-#Change to softmax for 2 classes
-output = Dense(2, activation = 'softmax')(drop_1) 
+#Change to softmax for 4 classes
+output = Dense(4, activation = 'softmax')(drop_1) 
 
 #Compile Model
 model = Model(inputs = input_layer, outputs = output)
@@ -92,7 +92,7 @@ model.compile(optimizer = "adam", loss = "categorical_crossentropy", metrics = [
 #model.summary()
 
 #Configure Checkpoint Model
-fle_s = 'Model/Output/Emotion_Model.keras'
+fle_s = 'Model/Output/Emotion_Gender_Model.keras'
 checkpointer = ModelCheckpoint(fle_s, monitor = 'loss', verbose = 1, save_best_only = True, save_weights_only = False, mode = 'auto', save_freq = 'epoch')
 callback_list = [checkpointer]
 
@@ -133,7 +133,7 @@ plt.show()
 # Y_pred_labels = np.argmax(Y_pred, axis = 1)
 
 # cm = confusion_matrix(np.argmax(Y_test, axis = 1), np.argmax(Y_pred, axis = 1))
-# disp = ConfusionMatrixDisplay(confusion_matrix = cm, display_labels = ["Happy", "Sad"])
+# disp = ConfusionMatrixDisplay(confusion_matrix = cm, display_labels = ["Happy_Female", "Sad_Male", "Happy_Male", "Sad_Female",])
 # disp.plot()
 # plt.title('My CNN Emotion Classifer')
 # plt.ylabel('Actual class')
@@ -145,9 +145,9 @@ plt.show()
 # plt.show()
 
 # #ROC Curve
-# new_label = ['Happy', 'Sad']
+# new_label = ['Happy_Female', 'Sad_Male', 'Happy_Male', 'Sad_Female']
 # final_label = new_label
-# new_class = 2
+# new_class = 4
 
 # #Ravel flatten array into one vector
 # y_pred_ravel = Y_pred.ravel()
@@ -161,7 +161,7 @@ plt.show()
 #     fpr[i], tpr[i], _ = roc_curve(Y_test[:, i], Y_pred[:, i])
 #     roc_auc[i] = auc(fpr[i], tpr[i])
     
-# colors = cycle(['red', 'black'])
+# colors = cycle(['red', 'black', 'yellow', 'purple'])
 # for i, color in zip(range(new_class), colors):
 #     plt.plot(fpr[i], tpr[i], color = color, lw = lw,
 #              label = 'ROC curve of class {0}'''.format(final_label[i]))
